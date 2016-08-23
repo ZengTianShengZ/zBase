@@ -15,18 +15,68 @@
 
 };*/
 
-var $ = function (_this) {
-    return new Base(_this);
+var $ = function (args) {
+    return new Base(args);
 }
 
-function Base(_this) {
+function Base(args) {
     // 将  elements数组在这里声明，当 new Base();就会有一份新的 数组
     // elements 用来存放 节点数组
     this.elements = [];
-    // _this 是一个对象，对象不存在就是 undefined ，而不是 ‘undefined’，带引号的是对象的类型，
-    if(_this != undefined){
-        this.elements[0] = _this
+
+    if(typeof args == 'string'){
+        console.log(  args   );
+        switch (args.charAt(0)){
+            case '#':
+
+                this.elements.push(this.getId(args.substring(1)));
+
+                break;
+            case '.':
+
+                this.elements =  this.getClassName(args.substring(1))
+
+                break;
+            default :
+                this.elements =  this.getTagName(args)
+              //  this.getTagName(args);
+
+        }
+    }else if(typeof args == 'object'){
+        // args 是一个对象，对象不存在就是 undefined ，而不是 ‘undefined’，带引号的是对象的类型，
+        if(args != undefined){
+            this.elements[0] = args
+        }
     }
+
+}
+Base.prototype.find = function (str) {
+    var childElements = [];
+    for(var t = 0;t< this.elements.length;t++){
+        switch (str.charAt(0)){
+            case '#':
+                // 虽然这么写，但没什么意义，因为 id是唯一的，想得到id不用利用他的父元素再来找id
+                childElements.push(this.getId(str.substring(1)));
+                break;
+            case '.':
+                var temp = this.getClassName(str.substring(1),this.elements[t]);
+                for(var j = 0 ; j <temp.length;j++){
+                    childElements.push(temp[j]);
+                }
+
+                break;
+            default :
+                console.log(".............");
+                var temp = this.getTagName(str,this.elements[t]);
+                console.log("............."+temp);
+                for(var j = 0 ; j <temp.length;j++){
+                    console.log("...vv..........");
+                    childElements.push(temp[j]);
+                }
+        }
+    }
+    this.elements = childElements;
+    return this;
 }
 // 注意： elements 不能放在 prototype 原型里面，不然参数会共享，
 //Base.prototype.elements = [];
@@ -34,11 +84,9 @@ function Base(_this) {
 
 Base.prototype.getId = function (id) {
     // 创建一个数组 ，用来保存节点，或节点数组
+    return document.getElementById(id);
+    //this.elements.push(document.getElementById(id));
 
-    this.elements.push(document.getElementById(id));
-
-
-    return this;
 }
 
 Base.prototype.getName = function (name) {
@@ -48,25 +96,36 @@ Base.prototype.getName = function (name) {
         //[object HTMLParagraphElement]
         this.elements.push(tags[t]);
     }
-    return this;
+
 }
 
-Base.prototype.getTagName = function (tagName) {
+Base.prototype.getTagName = function (tagName,parentNode) {
 
-    var tags = document.getElementsByTagName(tagName); //[object HTMLCollection]
+    var node = null;
+    var temps = [];
+    if(parentNode != undefined){
+        node = parentNode;
+        //  node 是 [object HTMLDivElement]  及 id 包含下的 html 片段
+    }else{
+        node = document;
+        //  document   是   [object HTMLDocument]  及所有html 片段  ,typeof document 是 object
+    }
 
+    var tags = node.getElementsByTagName(tagName);
     for(var t = 0;t<tags.length;t++){
         //[object HTMLParagraphElement]
-        this.elements.push(tags[t]);
+        temps.push(tags[t]);
+
     }
-    return this;
+    return temps;
+
 }
 
-Base.prototype.getClassName =function (className,idName) {
-
-    var node;
-    if(arguments.length == 2){
-        node = document.getElementById(idName);
+Base.prototype.getClassName =function (className,parentNode) {
+    var node = null;
+    var temps = [];
+    if(parentNode != undefined){
+        node = parentNode;
         //  node 是 [object HTMLDivElement]  及 id 包含下的 html 片段
     }else{
         node = document;
@@ -76,9 +135,10 @@ Base.prototype.getClassName =function (className,idName) {
     var tags = node.getElementsByClassName(className);
     for(var t = 0;t<tags.length;t++){
         //[object HTMLParagraphElement]
-        this.elements.push(tags[t]);
+        temps.push(tags[t]);
+
     }
-    return this;
+    return temps;
 
 }
 
