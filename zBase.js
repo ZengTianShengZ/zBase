@@ -25,23 +25,67 @@ function Base(args) {
     this.elements = [];
 
     if(typeof args == 'string'){
-        console.log(  args   );
-        switch (args.charAt(0)){
-            case '#':
+        // css 模拟
+        // 传进来的 字符串 有包含空格
+        if(args.indexOf(' ') != -1) {
+            var ele = args.split(' ');
+            //console.log(".................."+ele.length);
+            var childElements = [];
+            var node = []
+            for (var i = 0; i < ele.length; i++) {
+                if(node.length == 0)
+                    node.push(document);
+                switch (ele[i].charAt(0)) {
+                    case '#':
+                        childElements = [];
+                        childElements.push(this.getId(ele[i].substring(1)));
+                        node = childElements;
+                        break;
+                    case '.':
+                        childElements = [];
+                        for( var j = 0;j<node.length;j++){
+                          var temps = this.getClassName(ele[i].substring(1),node[j]);
+                            for(var k=0;k<temps.length;k++){
+                                childElements.push(temps[k]);
+                            }
+                        }
+                         node = childElements;
 
-                this.elements.push(this.getId(args.substring(1)));
+                        break;
+                    default :
+                        childElements = [];
+                        for( var j = 0;j<node.length;j++){
+                            // 这里的 node 是上一次的子节点，在这一次变成了父节点来为这次的子节点做遍历！！！
+                            var temps = this.getTagName(ele[i],node[j]);
+                            for(var k=0;k<temps.length;k++){
+                                childElements.push(temps[k]);
+                            }
+                        }
+                        // 遍历的子节点变成父节点，供给下一次子节点的子节点用。
+                        node = childElements;
+                }
+            }
+            this.elements = childElements;
+        }else{
+            // find 模拟
+            switch (args.charAt(0)){
+                case '#':
 
-                break;
-            case '.':
+                    this.elements.push(this.getId(args.substring(1)));
 
-                this.elements =  this.getClassName(args.substring(1))
+                    break;
+                case '.':
 
-                break;
-            default :
-                this.elements =  this.getTagName(args)
-              //  this.getTagName(args);
+                    this.elements =  this.getClassName(args.substring(1))
 
+                    break;
+                default :
+                    this.elements =  this.getTagName(args)
+                //  this.getTagName(args);
+
+            }
         }
+
     }else if(typeof args == 'object'){
         // args 是一个对象，对象不存在就是 undefined ，而不是 ‘undefined’，带引号的是对象的类型，
         if(args != undefined){
