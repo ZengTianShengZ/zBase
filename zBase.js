@@ -330,6 +330,91 @@ Base.prototype.drag = function(){
 }
 
 /**
+ * 封装现代事件 ，因为 存在 IE 的兼容问题，所以在 else 的 地方处理的比较麻烦
+ * 添加事件
+ * @param obj   元素节点，需要注册事件的 节点
+ * @param type  事件类型 click 或 movie
+ * @param fun   处理事件的方法
+ * @returns {boolean}
+ */
+function addEvent(obj,type,fun) {
+    if(typeof obj.addEventListener != "undefined"){
+        obj.addEventListener(type,fun,false);
+    }else{
+        // IE 的 现代事件绑定有很多漏洞，所以用原始的事件绑定模拟 现代事件绑定
+        //创建一个存放事件的哈希表
+        if(! obj.events)
+            obj.events = {};
+        // 第一次执行时
+        if(! obj.events[type]){
+            // 创建一个存放事件处理函数的数组
+            obj.events[type] = [];
+            // 把第一次事件处理函数添加到第一个位置
+            if(obj['on'+type])
+                obj.events[type][0] = fun;
+        }else{
+            // 判断比较是否传进了重复的点击事件，是的话不做处理，跳过
+            if(addEvent.equal(obj.events[type],fun))
+                return false;
+        }
+        // 从第二次开始用事件计数器来存储
+        obj.events[type][addEvent.ID ++] = fun;
+        // 执行事件处理函数
+        obj['on'+type] = addEvent.exec;
+    }
+}
+// 直接 var ID =  1  为什么不行，因为全局变量是魔鬼 ID是给 addEvent用的，就应该是addEvent的变量
+addEvent.ID = 1;
+// 执行事件处理函数
+addEvent.exec  =function (e) {
+     var e = event || addEvent.fixEvent(window.event);
+    var es = this.events[e.type];
+    for(var i in es){
+        es[i].call(this,e);
+    }
+}
+addEvent.equal = function (es,fun) {
+    for(var i in es){
+        if(es[i] == fun)
+            return true;
+    }
+    return false;
+}
+// 把IE 常用的 Event 对象 配对到 W3C 中去 ， 其实也就是 重写 IE 的 默认方法
+addEvent.fixEvent = function (e) {
+    //e.preventDefault() 是 w3c 的 方法
+    e.preventDefault() =addEvent.fixEvent.preventDefault;
+    e.stopPropagation() = addEvent.fixEvent.stopPropagation;
+    return e;
+}
+// IE 阻止默认行为
+addEvent.fixEvent.preventDefault = function () {
+    // e.returnValue = false; 是 IE 的 方法
+    this.returnValue = false;
+}
+// IE 取消冒泡
+addEvent.fixEvent.stopPropagation = function () {
+    this.cancelBubble = true;
+}
+/**
+ *  移除 事件
+ * @param obj   要移除的元素节点，需要移除事件的 节点
+ * @param type  事件类型 click 或 movie
+ * @param fun   处理事件的方法
+ */
+function removeEvent(obj,type,fun) {
+   if(typeof obj.addEventListener != "undefined"){
+         obj.addEventListener(type,fun,false);
+         }else{
+            for(var i in obj.events[type]){
+                if(obj.events[type][i] == fun){
+                    delete obj.events[type][i];
+                }
+        }
+    }
+}
+
+/**
  *  跨浏览器获取视口大小
  * @returns {*}
  */
