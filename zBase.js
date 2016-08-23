@@ -272,62 +272,16 @@ Base.prototype.screenUnLock = function(){
 }
 
 /**
- *  盒子的 拖拽 功能
- * @returns {Base}
+ *  插件接口  ，当一些比较不经常用的东西可以以插件的形式载入，避免 zBase 文件冗余
+ *  <script type="text/javascript" src="../js/zBase_drag.js"></script>
+ *  例如 一个 zBase_drag.js 插件，利用下面函数将插件的 内容加载到 原型函数中
+ * @param name   插件函数名
+ * @param fun    插件方法
  */
-Base.prototype.drag = function(){
+Base.prototype.extend = function (name ,fun) {
+    Base.prototype[name] = fun;
+};
 
-    for(var t = 0;t<this.elements.length;t++){
-       // var moveLogin = document.getElementById("login");
-        this.elements[t].onmousedown = function(e){
-            // 这里的 this 代表 moveLogin，因为在 moveLogin的方法里。
-            var _this = this;
-            // 兼容 IE
-            var e = e || window.event;
-            //  diffX 只 鼠标点在 moveLogin 容器里 距离 容器左边的 小 距离
-            var diffX = e.clientX - _this.offsetLeft;
-            var diffY = e.clientY - _this.offsetTop;
-
-            // 为什么 onmousemove 和 onmouseup 用的是 document，而不是 moveLogin
-            // 因为 如果是 在 moveLogin执行 onmousemove 和 onmouseup 操作，那么只是针对  moveLogin 的操作，
-            // 当你 鼠标快速移动 离开了 moveLogin 区域，那么 onmousemove 和 onmouseup事件就被 屏幕给抓取了，
-            // 你就不能继续 对 moveLogin执行onmousemove 和 onmouseup 操作了。
-            // 所以 onmousemove 和 onmouseup 操作 全局交给 document 就可以了！！！！
-            document.onmousemove = function(e){
-
-                var e = e || window.event;
-
-                var left =  e.clientX - diffX;
-                var top = e.clientY - diffY;
-                // 设置 最左边最右边，使之不能脱出 浏览器大小
-                if(left <0){
-                    left = 0;
-
-                }else if(left > getInner().width - _this.offsetWidth){
-                    left = getInner().width - _this.offsetWidth;
-                }
-                // 设置 最上边最下边，使之不能脱出 浏览器大小
-                if(top<0){
-                    top = 0;
-
-                }else if(top > getInner().height - _this.offsetHeight){
-                    top =  getInner().height - _this.offsetHeight;
-                }
-
-                _this.style.left = left + "px";
-                _this.style.top = top + "px";
-            }
-            document.onmouseup = function(){
-                // 这里的 this 代表 document，因为在 document 的方法里。
-                this.onmousemove = null;
-                this.onmouseup = null;
-            }
-        }
-
-
-    }
-    return this;
-}
 
 /**
  * 封装现代事件 ，因为 存在 IE 的兼容问题，所以在 else 的 地方处理的比较麻烦
@@ -363,39 +317,39 @@ function addEvent(obj,type,fun) {
         obj['on'+type] = addEvent.exec;
     }
 }
-// 直接 var ID =  1  为什么不行，因为全局变量是魔鬼 ID是给 addEvent用的，就应该是addEvent的变量
-addEvent.ID = 1;
-// 执行事件处理函数
-addEvent.exec  =function (e) {
-     var e = event || addEvent.fixEvent(window.event);
-    var es = this.events[e.type];
-    for(var i in es){
-        es[i].call(this,e);
-    }
-}
-addEvent.equal = function (es,fun) {
-    for(var i in es){
-        if(es[i] == fun)
-            return true;
-    }
-    return false;
-}
-// 把IE 常用的 Event 对象 配对到 W3C 中去 ， 其实也就是 重写 IE 的 默认方法
-addEvent.fixEvent = function (e) {
-    //e.preventDefault() 是 w3c 的 方法
-    e.preventDefault() =addEvent.fixEvent.preventDefault;
-    e.stopPropagation() = addEvent.fixEvent.stopPropagation;
-    return e;
-}
-// IE 阻止默认行为
-addEvent.fixEvent.preventDefault = function () {
-    // e.returnValue = false; 是 IE 的 方法
-    this.returnValue = false;
-}
-// IE 取消冒泡
-addEvent.fixEvent.stopPropagation = function () {
-    this.cancelBubble = true;
-}
+                        // 直接 var ID =  1  为什么不行，因为全局变量是魔鬼 ID是给 addEvent用的，就应该是addEvent的变量
+                        addEvent.ID = 1;
+                        // 执行事件处理函数
+                        addEvent.exec  =function (e) {
+                             var e = event || addEvent.fixEvent(window.event);
+                            var es = this.events[e.type];
+                            for(var i in es){
+                                es[i].call(this,e);
+                            }
+                        }
+                        addEvent.equal = function (es,fun) {
+                            for(var i in es){
+                                if(es[i] == fun)
+                                    return true;
+                            }
+                            return false;
+                        }
+                        // 把IE 常用的 Event 对象 配对到 W3C 中去 ， 其实也就是 重写 IE 的 默认方法
+                        addEvent.fixEvent = function (e) {
+                            //e.preventDefault() 是 w3c 的 方法
+                            e.preventDefault() =addEvent.fixEvent.preventDefault;
+                            e.stopPropagation() = addEvent.fixEvent.stopPropagation;
+                            return e;
+                        }
+                        // IE 阻止默认行为
+                        addEvent.fixEvent.preventDefault = function () {
+                            // e.returnValue = false; 是 IE 的 方法
+                            this.returnValue = false;
+                        }
+                        // IE 取消冒泡
+                        addEvent.fixEvent.stopPropagation = function () {
+                            this.cancelBubble = true;
+                        }
 /**
  *  移除 事件
  * @param obj   要移除的元素节点，需要移除事件的 节点
