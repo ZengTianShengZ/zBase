@@ -25,7 +25,7 @@ function Base(args) {
     this.elements = [];
 
     if(typeof args == 'string'){
-        // css 模拟
+        // css 模拟  如  $('.cp span').css('color','red');
         // 传进来的 字符串 有包含空格
         if(args.indexOf(' ') != -1) {
             var ele = args.split(' ');
@@ -67,7 +67,7 @@ function Base(args) {
             }
             this.elements = childElements;
         }else{
-            // find 模拟
+            // find 模拟  如  $('.cp')find('span').css('color','red');
             switch (args.charAt(0)){
                 case '#':
 
@@ -110,12 +110,9 @@ Base.prototype.find = function (str) {
 
                 break;
             default :
-                console.log(".............");
                 var temp = this.getTagName(str,this.elements[t]);
-                console.log("............."+temp);
-                for(var j = 0 ; j <temp.length;j++){
-                    console.log("...vv..........");
-                    childElements.push(temp[j]);
+                 for(var j = 0 ; j <temp.length;j++){
+                     childElements.push(temp[j]);
                 }
         }
     }
@@ -179,8 +176,9 @@ Base.prototype.getClassName =function (className,parentNode) {
     var tags = node.getElementsByClassName(className);
     for(var t = 0;t<tags.length;t++){
         //[object HTMLParagraphElement]
-        temps.push(tags[t]);
-
+        if((new RegExp('(\\s|^)'+className+'(\\s|$)')).test(tags[t].className)){
+            temps.push(tags[t]);
+        }
     }
     return temps;
 
@@ -228,7 +226,37 @@ Base.prototype.getElement = function(num){
     this.elements[0] = ele;
     return this;
 }
+/**
+ * 获取 第一个节点
+ * @returns {*}
+ */
+Base.prototype.firstE = function () {
+    return this.elements[0];
+}
+/**
+ * 获取最后一个节点
+ * @returns {*}
+ */
+Base.prototype.lastE = function () {
+    return this.elements[this.elements.length-1];
+};
+/**
+ * 获取 / 设置 某一个节点的 属性 ，包括自定义属性
+ * @param attr
+ * @returns {string}
+ */
+Base.prototype.arrt = function (attr,value) {
+    for(var i=0; i<this.elements.length; i++){
+        if(arguments.length == 1){
+            return this.elements[i].getAttribute(attr);
+        }else if(arguments.length == 2){
+            return this.elements[i].setAttribute(attr,value);
+        }
+    }
+    return this;
 
+
+};
 /**
  * 操作 css
  * @param css_type
@@ -249,16 +277,51 @@ Base.prototype.css = function (css_type, value) {
         //  接下来用第二中方法
         if(arguments.length == 1){
 
-          if(typeof window.getComputedStyle != 'undefined'){  // W3C
-              return window.getComputedStyle(this.elements[t],null)[css_type];
-          }
-          else if(typeof this.elements[t].currentStyle!='underfined'){  // IE
-              return this;
-          }
+           return getStyle(elements[t],css_type);
         }
         this.elements[t].style[css_type] = value;
     }
 
+    return this;
+}
+/**
+ * 获取节点元素的 样式 的 值
+ * @param element 节点
+ * @param attr  样式
+ * @returns {*} 样式的值
+ */
+function getStyle(element,attr) {
+    if(typeof window.getComputedStyle != 'undefined'){  // W3C
+        return window.getComputedStyle(element,null)[attr];
+    }
+    else if(typeof element.currentStyle!='underfined'){  // IE
+        return element.currentStyle[attr];
+    }
+}
+
+/**
+ * 通过 name 得到表单
+ * @param name
+ * @returns {Base}
+ */
+Base.prototype.form = function (name) {
+    for(var i=0; i<this.elements.length; i++){
+        this.elements[i] = this.elements[i][name];
+    }
+    return this;
+}
+/**
+ * 设置表单字段内容获取
+ * @param str
+ * @returns {*}
+ */
+Base.prototype.value = function (str) {
+    for(var i=0; i<this.elements.length; i++){
+        if(arguments.length == 0){
+            return this.elements[i].value;
+        }
+        this.elements[i].value = str;
+    }
     return this;
 }
 
@@ -376,6 +439,47 @@ Base.prototype.screenUnLock = function(){
 }
 
 /**
+ * 给一个 元素添加动画
+ * 如  $('#divId').animate('left',10,700,1000);
+ * @param attr 样式 ，一般是 left 或 top
+ * @param step 移动的距离
+ * @param target 移动的终点
+ * @param t 每次移动的毫秒
+ */
+Base.prototype.animate = function (obj) {
+    for(var i = 0;i<this.elements.length;i++){
+        var ele = this.elements[i];
+        var attr = obj['attr']=='x'?'left': obj['attr']=='y'?'top':'left';// 给一个默认值，默认 动画左右移动
+        var start = obj['start'] != undefined ? obj['start']:getStyle(ele,attr);//默认值 默认节点的位置，
+        var t = obj['t']!= undefined ? obj['t']:50;// 默认动画为 50 ms
+        var step = obj['step']!= undefined?obj['step']:10;//默认移动步长 10px
+        var  target = obj['alter']+start; // 必选值
+
+        if(step > target)
+            step = -step;
+        ele.style[attr] = start+'px';
+        clearInterval(window.time);
+
+        var nowPosition = 0;
+        var time = setInterval(function () {
+
+            nowPosition = parseInt( getStyle(ele,attr));
+            ele.style[attr] =nowPosition +step+"px";
+            // if 判断 放在赋值的后面，会减掉多出来的一个节拍！！
+            if(step>0 && nowPosition >= target){
+                ele.style[attr] = target+'px';
+                clearInterval(time);
+            }else if(step< 0 && nowPosition <= target){
+                ele.style[attr] = target+'px';
+                clearInterval(time);
+            }
+        },t);
+    }
+}
+
+
+
+/**
  *  插件接口  ，当一些比较不经常用的东西可以以插件的形式载入，避免 zBase 文件冗余
  *  <script type="text/javascript" src="../js/zBase_drag.js"></script>
  *  例如 一个 zBase_drag.js 插件，利用下面函数将插件的 内容加载到 原型函数中
@@ -385,6 +489,18 @@ Base.prototype.screenUnLock = function(){
 Base.prototype.extend = function (name ,fun) {
     Base.prototype[name] = fun;
 };
+/**
+ * 设置事件发生器，绑定所有节点的事件，给所有节点添加事件
+ * @param event
+ * @param fun
+ * @returns {Base}
+ */
+Base.prototype.bind = function (event,fun) {
+    for(var t = 0;t<this.elements.length;t++){
+        addEvent(this.elements[t],event,fun);
+    }
+    return this;
+}
 
 
 /**
@@ -491,13 +607,69 @@ function removeEvent(obj,type,fun) {
     }
 }
 
+function getScroll() {
+    return{
+        top:document.documentElement.scrollTop||document.body.scrollTop,
+        left:document.documentElement.scrollLeft||document.body.scrollLeft
+    }
+}
+/**
+ * 删除前后空格
+ * @param str
+ * @returns {string|void|XML|*}
+ */
+function trim(str) {
+    return str.replace("/(^\s*)|(\s*$)/g,");
+}
 
-
-
-
-
-
-
+/**
+ * 跨浏览器 获取 html 文本
+ * @param element
+ * @returns {string}
+ */
+function getInnerText(element) {
+    return (typeof element.textContent == 'strign')?element.textContent:element.innerText;
+}
+/**
+ * 跨浏览器 设置 html 文本
+ * @param element
+ * @param text
+ */
+function setInnerText(element,text) {
+    if(typeof element.textContent == 'string'){
+        element.textContent = text;
+    }else{
+        element.innerText = text;
+    }
+}
+/**
+ * 某 一个值是否存在某一个数组中
+ * 如 var arr = [12,323,43,434,54,5];
+ * inArray(arr,666);  返回 false；
+ * @param array
+ * @param value
+ * @returns {boolean}
+ */
+function inArray(array,value) {
+    for(var i in array){
+        if(array[i] === value) return true;
+    }
+    return false;
+}
+/**
+ * 获取某一元素到最外层顶点的距离
+ * @param ele  元素
+ * @returns {number|Number}  顶点距离
+ */
+function offsetTop(ele) {
+    var top = ele.offsetTop;
+    var parent = ele.offsetParent;
+    while (parent != null){
+        top += parent.offsetTop;
+        parent = parent.offsetParent;
+    }
+    return top;
+}
 
 
 
