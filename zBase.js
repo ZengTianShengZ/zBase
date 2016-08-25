@@ -89,7 +89,7 @@ function Base(args) {
     }else if(typeof args == 'object'){
         // args 是一个对象，对象不存在就是 undefined ，而不是 ‘undefined’，带引号的是对象的类型，
         if(args != undefined){
-            this.elements[0] = args
+            this.elements[0] = args;
         }
     }
 
@@ -225,14 +225,17 @@ Base.prototype.getElement = function(num){
     // 反正 就是 对 elements 进行操作就是了，elements保存了所有节点的信息
     this.elements[0] = ele;
     return this;
-}
+};
+Base.prototype.getE = function (num) {
+    return this.elements[num];
+};
 /**
  * 获取 第一个节点
  * @returns {*}
  */
 Base.prototype.firstE = function () {
     return this.elements[0];
-}
+};
 /**
  * 获取最后一个节点
  * @returns {*}
@@ -397,8 +400,8 @@ Base.prototype.hide = function(){
  * @returns {Base}
  */
 Base.prototype.centerInWindow = function(width,heigh){
-    var top = (document.documentElement.clientHeight-heigh)/2;
-    var left = (document.documentElement.clientWidth-width)/2;
+    var top = (getInner().height - heigh)/2 + getScroll().top;
+    var left = (getInner().width  - width)/2 + getScroll().left;
 
     for(var t = 0;t<this.elements.length;t++){
         this.elements[t].style.top = top + "px";
@@ -406,11 +409,33 @@ Base.prototype.centerInWindow = function(width,heigh){
     }
     return this;
 
-}
+};
+/**
+ * 浏览器 窗口 大小 改变是事件
+ * @param fun  事件的方法
+ * @returns {Base}
+ */
 Base.prototype.windowResize = function(fun){
-    window.onresize = fun;
+    for(var t = 0;t<this.elements.length;t++){
+        var ele = this.elements[i];
+        addEvent(window,'resize',function () {
+            fun();
+            if(ele.offsetLeft > getInner().width + getScroll().left-ele.offsetWidth){
+                ele.style.left = getInner().width + getScroll().left - ele.offsetWidth + 'px';
+                if(ele.offsetLeft <= 0 +getScroll().left){
+                    ele.style.left = 0 + getScroll().top + 'px';
+                }
+            }
+            if(ele.offsetTop > getInner().height + getScroll().top-ele.offsetHeight){
+                ele.style.top = getInner().height + getScroll().top - ele.offsetHeight + 'px';
+                if(ele.offsetTop <= 0 + getScroll().top){
+                    ele.style.top = 0 + getScroll().top + 'px';
+                }
+            }
+        })
+    }
     return this;
-}
+};
 
 /**
  * 将屏幕完全遮住的功能，如登陆弹窗，需要将背景置灰色透明
@@ -421,9 +446,10 @@ Base.prototype.windowResize = function(fun){
 Base.prototype.screenLock = function(){
     for(var t = 0;t<this.elements.length;t++){
         // 将 宽度 和 高度 设为 当前窗口的 大小
-        this.elements[t].style.height = getInner().height +'px';
-        this.elements[t].style.width = getInner().width +'px';
+        this.elements[t].style.height = getInner().height +getScroll().top+'px';
+        this.elements[t].style.width = getInner().width +getScroll().left +'px';
         this.elements[t].style.display = "block";
+        document.documentElement.style.overflow = 'hidden';
     }
     return this;
 }
@@ -671,7 +697,34 @@ function offsetTop(ele) {
     return top;
 }
 
-
+/**
+ * 得到上一个 节点的 索引
+ * 比如 ,<ul  下面有好几个  <li   ，得到当前 li 的 上一个 li
+ * @param current
+ * @param parent
+ * @returns {number}
+ */
+function  pervIndex(current,parent) {
+    var length = parent.children.length;
+    if(current == 0 ){
+        return length - 1;
+    }
+    return current - 1;
+}
+/**
+ * 得到下一个 节点的 索引
+ * 比如 ,<ul  下面有好几个  <li   ，得到当前 li 的 下一个 li
+ * @param current
+ * @param parent
+ * @returns {*}
+ */
+function nextIndex(current,parent) {
+    var length = parent.children.length;
+    if(current == length){
+        return 0;
+    }
+    return current + 1;
+}
 
 
 
