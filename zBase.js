@@ -1,19 +1,8 @@
-
-/*var Base = {
-    getId:function (id) {
-        return document.getElementById(id);
-    },
-    getName:function (name) {
-        return document.getElementsByName(name);
-    },
-    getTagName:function (tagName) {
-        return document.getElementsByTagName(tagName);
-    },
-    getClassName:function (className) {
-        return document.getElementsByClassName(className);
-    }
-
-};*/
+/**
+ * 一个轻量级的 DOM 操作库，里面封装了一些对元素节点的简单操作
+ * 如节点的查询获取，className的添加移除，样式的添加移除，
+ * 节点的添加和移除，事件的封装，动画的封装等等...
+ */
 
 var $ = function (args) {
     return new Base(args);
@@ -29,7 +18,6 @@ function Base(args) {
         // 传进来的 字符串 有包含空格
         if(args.indexOf(' ') != -1) {
             var ele = args.split(' ');
-            //console.log(".................."+ele.length);
             var childElements = [];
             var node = []
             for (var i = 0; i < ele.length; i++) {
@@ -277,12 +265,20 @@ Base.prototype.css = function (css_type, value) {
             return this.elements[t].style[css_type];
         }*/
 
-        //  接下来用第二中方法
-        if(arguments.length == 1){
+        if(typeof css_type == 'object'){
 
-           return getStyle(elements[t],css_type);
+            for( var c in css_type){
+                this.elements[t].style[c] = css_type[c];
+            }
+        }else {
+            //  接下来用第二中方法
+            if(arguments.length == 1){
+            
+                return getStyle(this.elements[t],css_type);
+            }
+            this.elements[t].style[css_type] = value;
         }
-        this.elements[t].style[css_type] = value;
+
     }
 
     return this;
@@ -294,6 +290,7 @@ Base.prototype.css = function (css_type, value) {
  * @returns {*} 样式的值
  */
 function getStyle(element,attr) {
+
     if(typeof window.getComputedStyle != 'undefined'){  // W3C
         return window.getComputedStyle(element,null)[attr];
     }
@@ -445,11 +442,18 @@ Base.prototype.windowResize = function(fun){
  */
 Base.prototype.screenLock = function(){
     for(var t = 0;t<this.elements.length;t++){
+        fixedScroll.top = getScroll().top;
+        fixedScroll.left = getScroll().left;
         // 将 宽度 和 高度 设为 当前窗口的 大小
         this.elements[t].style.height = getInner().height +getScroll().top+'px';
         this.elements[t].style.width = getInner().width +getScroll().left +'px';
         this.elements[t].style.display = "block";
         document.documentElement.style.overflow = 'hidden';
+
+        addEvent(this.elements[i],'mousedown',predef);
+        addEvent(this.elements[i],'mouseup',predef);
+        addEvent(this.elements[i],'selectsart',predef);
+        addEvent(window,'scroll',fixedScroll);
     }
     return this;
 }
@@ -460,6 +464,12 @@ Base.prototype.screenLock = function(){
 Base.prototype.screenUnLock = function(){
     for(var t = 0;t<this.elements.length;t++){
         this.elements[t].style.display = "none";
+        document.documentElement.style.overflow = 'auto';
+
+        removeEvent(this.elements[i],'mousedown',predef);
+        removeEvent(this.elements[i],'mouseup',predef);
+        removeEvent(this.elements[i],'selectsart',predef);
+        removeEvent(window,'scroll',fixedScroll);
     }
     return this;
 }
@@ -709,7 +719,7 @@ function  pervIndex(current,parent) {
     if(current == 0 ){
         return length - 1;
     }
-    return current - 1;
+    return  parseInt(current) - 1;
 }
 /**
  * 得到下一个 节点的 索引
@@ -723,10 +733,23 @@ function nextIndex(current,parent) {
     if(current == length){
         return 0;
     }
-    return current + 1;
+    return  parseInt(current) + 1;
 }
 
+/**
+ * 滚动条固定到一定位置
+ */
+function fixedScroll() {
+    window.screenTop(fixedScroll().left,fixedScroll().top);
+}
 
+/**
+ * 阻止浏览器默认行为
+ * @param e
+ */
+function predef(e) {
+    e.preventDefault();
+}
 
 
 
