@@ -273,7 +273,7 @@ Base.prototype.css = function (css_type, value) {
         }else {
             //  接下来用第二中方法
             if(arguments.length == 1){
-            
+
                 return getStyle(this.elements[t],css_type);
             }
             this.elements[t].style[css_type] = value;
@@ -613,8 +613,8 @@ function addEvent(obj,type,fun) {
  * @param fun   处理事件的方法
  */
 function removeEvent(obj,type,fun) {
-   if(typeof obj.addEventListener != "undefined"){
-         obj.addEventListener(type,fun,false);
+   if(typeof obj.removeEventListener != "undefined"){
+         obj.removeEventListener(type,fun,false);
          }else{
             for(var i in obj.events[type]){
                 if(obj.events[type][i] == fun){
@@ -642,7 +642,10 @@ function removeEvent(obj,type,fun) {
         }
     }
 }
-
+/**
+ * 获得 浏览器滚动条的距离
+ * @returns {{top: number, left: number}}
+ */
 function getScroll() {
     return{
         top:document.documentElement.scrollTop||document.body.scrollTop,
@@ -750,13 +753,5 @@ function fixedScroll() {
 function predef(e) {
     e.preventDefault();
 }
-
-
-
-
-
-
-
-
 
 
