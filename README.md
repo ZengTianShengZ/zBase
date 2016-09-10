@@ -240,6 +240,24 @@ $('p').hide();
 console.log("...top....."+  getScroll().left);
 ```
 
+**4、图片预加载 preprocessorImage(obj)**
+一般呢，我们往  <img 标签 设置 src = ‘xxx.png’ 那么浏览器就开始请求数据加载图片了，所以当你加载一张大图时，就会看见图片从上 到下慢慢的显示出来。
+而图片 `预加载`  则是 先在后台请求数据加载完图片，然后再让图片一下显示出来，效果是不同的！
+参数 obj ：一个对象，里面是 图片的 链接数组 和 回调函数，如下例子：
+加载完图片，再将 <img 标签插入 div 里面
+```
+ preprocessorImage({
+                img_array:['http://img.pconline.com.cn/images/upload/upc/tx/wallpaper/1209/10/c1/13764273_1347270360314_800x600.jpg',
+                    'https://cloud.githubusercontent.com/assets/15622519/18378764/61d0b4be-76a1-11e6-9571-36d785a35e56.png'],
+               
+                callback:function (img_src) {
+                   
+                    $('#img-div').html( '<img class="bg-img" src="'+  img_src +'" alt="">');
+                }
+            });
+```
+
+
 
 >#### **六、添加插件**
 在 zBase库中还支持扩展插件：
