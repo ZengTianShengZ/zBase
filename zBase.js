@@ -754,4 +754,21 @@ function predef(e) {
     e.preventDefault();
 }
 
+/**
+ * 图片预加载
+ * @param obj
+ */
+function preprocessorImage(obj) {
+    var img_array = obj.img_array;
+    var images = [];
+    for(var i = 0 , len =  img_array.length; i< len  ; i++){
+        images.push(new Image());
+        images[i].onload = function ( ){
+            console.log('.....dd.');
+            obj.callback(this.src);
+        };
+        console.log('......');
+        images[i].src = img_array[i];
+    }
+}
 
