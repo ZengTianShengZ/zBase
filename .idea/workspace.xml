@@ -319,15 +319,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1474102083193</updated>
-      <workItem from="1474102086919" duration="11171000" />
+      <workItem from="1474102086919" duration="11314000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11171000" />
+    <option name="totallyTimeSpent" value="11314000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
