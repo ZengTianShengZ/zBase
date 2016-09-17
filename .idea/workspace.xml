@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdc18573-f2b0-4365-9f6d-d373232ec57f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zBase-1.1.0/index.html" afterPath="$PROJECT_DIR$/zBase-1.1.0/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zBase-1.1.0/test.js" afterPath="$PROJECT_DIR$/zBase-1.1.0/test.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zBase-1.1.0/zBase-1.1.0.js" afterPath="$PROJECT_DIR$/zBase-1.1.0/zBase-1.1.0.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zBase.js" afterPath="$PROJECT_DIR$/zBase.js" />
-    </list>
+    <list default="true" id="cdc18573-f2b0-4365-9f6d-d373232ec57f" name="Default" comment="" />
     <ignored path="zBase.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -213,12 +208,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1474102083193</updated>
-      <workItem from="1474102086919" duration="2031000" />
+      <workItem from="1474102086919" duration="2113000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2031000" />
+    <option name="totallyTimeSpent" value="2113000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
