@@ -245,8 +245,6 @@ Base.prototype.arrt = function (attr,value) {
         }
     }
     return this;
-
-
 };
 /**
  * 操作 css
@@ -283,21 +281,7 @@ Base.prototype.css = function (css_type, value) {
 
     return this;
 }
-/**
- * 获取节点元素的 样式 的 值
- * @param element 节点
- * @param attr  样式
- * @returns {*} 样式的值
- */
-function getStyle(element,attr) {
 
-    if(typeof window.getComputedStyle != 'undefined'){  // W3C
-        return window.getComputedStyle(element,null)[attr];
-    }
-    else if(typeof element.currentStyle!='underfined'){  // IE
-        return element.currentStyle[attr];
-    }
-}
 
 /**
  * 通过 name 得到表单
@@ -538,6 +522,22 @@ Base.prototype.bind = function (event,fun) {
     return this;
 }
 
+/**
+ * 获取节点元素的 样式 的 值
+ * @param element 节点
+ * @param attr  样式
+ * @returns {*} 样式的值
+ */
+function getStyle(element,attr) {
+
+    if(typeof window.getComputedStyle != 'undefined'){  // W3C
+        return window.getComputedStyle(element,null)[attr];
+    }
+    else if(typeof element.currentStyle!='underfined'){  // IE
+        return element.currentStyle[attr];
+    }
+}
+
 
 /**
  * 封装现代事件 ，因为 存在 IE 的兼容问题，所以在 else 的 地方处理的比较麻烦
@@ -593,8 +593,8 @@ function addEvent(obj,type,fun) {
                         // 把IE 常用的 Event 对象 配对到 W3C 中去 ， 其实也就是 重写 IE 的 默认方法
                         addEvent.fixEvent = function (e) {
                             //e.preventDefault() 是 w3c 的 方法
-                            e.preventDefault() =addEvent.fixEvent.preventDefault;
-                            e.stopPropagation() = addEvent.fixEvent.stopPropagation;
+                            e.preventDefault =addEvent.fixEvent.preventDefault;
+                            e.stopPropagation = addEvent.fixEvent.stopPropagation;
                             return e;
                         }
                         // IE 阻止默认行为
