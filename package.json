@@ -1,0 +1,29 @@
+{
+  "name": "zbase",
+  "version": "1.1.0",
+  "description": "轻量级 dom 操作库",
+  "main": "zBase.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZengTianShengZ/zBase.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ZengTianShengZ/zBase/issues"
+  },
+  "homepage": "https://github.com/ZengTianShengZ/zBase#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-csso": "^2.0.0",
+    "gulp-filter": "^4.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-rev": "^7.1.2",
+    "gulp-rev-replace": "^0.4.3",
+    "gulp-uglify": "^2.0.0",
+    "gulp-useref": "^3.1.2"
+  }
+}
