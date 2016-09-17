@@ -17,6 +17,12 @@ $('li').getElement(2).css({
 }).click(function () {
     alert("vvvvvvv")
 });
+//alert( xxv() );
 
 
-//alert($('xxxx')+'///////');
+$('.dd').centerInWindow(100,100);
+
+
+//var arr = [12,323,43,434,54,5];
+
+//alert(   $().inArray(arr,12)  );

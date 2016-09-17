@@ -12,13 +12,267 @@
         //root.$ = factory();
        // alert(root + "............." + factory)
         root.$ =   factory;
+
+
+        this.xxv = function () {
+            return 33;
+        }
+
+
+        /**
+         *  跨浏览器获取视口大小
+         * @returns {*}
+         */
+        this.getInner = function () {
+            if(typeof window.innerWidth != 'undefined'){
+                // 直接 返回一个 对象  ，掉调调；
+                return {
+                    width:window.innerWidth,  // google 和 IE
+                    height:window.innerHeight   //  在这种 方法下 火狐 有白边，滚动条的白边
+                }
+            }else{
+                return {
+                    width:document.documentElement.clientWidth,  // google  Fixfox
+                    height:document.documentElement.clientHeight
+                }
+            }
+        };
+        /**
+         * 获取节点元素的 样式 的 值
+         * @param element 节点
+         * @param attr  样式
+         * @returns {*} 样式的值
+         */
+        this.getStyle = function (element,attr)  {
+            if(typeof window.getComputedStyle != 'undefined'){  // W3C
+                return window.getComputedStyle(element,null)[attr];
+            }
+            else if(typeof element.currentStyle!='underfined'){  // IE
+                return element.currentStyle[attr];
+            }
+        } ;
+        /**
+         * 封装现代事件 ，因为 存在 IE 的兼容问题，所以在 else 的 地方处理的比较麻烦
+         * 添加事件
+         * @param obj   元素节点，需要注册事件的 节点
+         * @param type  事件类型 click 或 movie
+         * @param fun   处理事件的方法
+         * @returns {boolean}
+         */
+        this. addEvent = function(obj,type,fun){
+            if(typeof obj.addEventListener != "undefined"){
+                obj.addEventListener(type,fun,false);
+            }else{
+                // IE 的 现代事件绑定有很多漏洞，所以用原始的事件绑定模拟 现代事件绑定
+                //创建一个存放事件的哈希表
+                if(! obj.events)
+                    obj.events = {};
+                // 第一次执行时
+                if(! obj.events[type]){
+                    // 创建一个存放事件处理函数的数组
+                    obj.events[type] = [];
+                    // 把第一次事件处理函数添加到第一个位置
+                    if(obj['on'+type])
+                        obj.events[type][0] = fun;
+                }else{
+                    // 判断比较是否传进了重复的点击事件，是的话不做处理，跳过
+                    if(addEvent.equal(obj.events[type],fun))
+                        return false;
+                }
+                // 从第二次开始用事件计数器来存储
+                obj.events[type][addEvent.ID ++] = fun;
+                // 执行事件处理函数
+                obj['on'+type] = addEvent.exec;
+            }
+        }
+        // 直接 var ID =  1  为什么不行，因为全局变量是魔鬼 ID是给 addEvent用的，就应该是addEvent的变量
+        addEvent.ID = 1;
+        // 执行事件处理函数
+        addEvent.exec  =function (e) {
+            var e = event || addEvent.fixEvent(window.event);
+            var es = this.events[e.type];
+            for(var i in es){
+                es[i].call(this,e);
+            }
+        };
+        addEvent.equal = function (es,fun) {
+            for(var i in es){
+                if(es[i] == fun)
+                    return true;
+            }
+            return false;
+        };
+        // 把IE 常用的 Event 对象 配对到 W3C 中去 ， 其实也就是 重写 IE 的 默认方法
+        addEvent.fixEvent = function (e) {
+            //e.preventDefault() 是 w3c 的 方法
+            e.preventDefault =addEvent.fixEvent.preventDefault;
+            e.stopPropagation = addEvent.fixEvent.stopPropagation;
+            return e;
+        };
+        // IE 阻止默认行为
+        addEvent.fixEvent.preventDefault = function () {
+            // e.returnValue = false; 是 IE 的 方法
+            this.returnValue = false;
+        };
+        // IE 取消冒泡
+        addEvent.fixEvent.stopPropagation = function () {
+            this.cancelBubble = true;
+        };
+        /**
+         *  移除 事件
+         * @param obj   要移除的元素节点，需要移除事件的 节点
+         * @param type  事件类型 click 或 movie
+         * @param fun   处理事件的方法
+         */
+        this. removeEvent = function(obj,type,fun) {
+            if(typeof obj.removeEventListener != "undefined"){
+                obj.removeEventListener(type,fun,false);
+            }else{
+                for(var i in obj.events[type]){
+                    if(obj.events[type][i] == fun){
+                        delete obj.events[type][i];
+                    }
+                }
+            }
+        }
+        /**
+         * 获得 浏览器滚动条的距离
+         * @returns {{top: number, left: number}}
+         */
+        this. getScroll = function() {
+            return{
+                top:document.documentElement.scrollTop||document.body.scrollTop,
+                left:document.documentElement.scrollLeft||document.body.scrollLeft
+            }
+        }
+        /**
+         * 删除前后空格
+         * @param str
+         * @returns {string|void|XML|*}
+         */
+        this. trim = function(str) {
+            return str.replace("/(^\s*)|(\s*$)/g,");
+        }
+
+        /**
+         * 跨浏览器 获取 html 文本
+         * @param element
+         * @returns {string}
+         */
+        this. getInnerText = function(element) {
+            return (typeof element.textContent == 'strign')?element.textContent:element.innerText;
+        }
+        /**
+         * 跨浏览器 设置 html 文本
+         * @param element
+         * @param text
+         */
+        this. setInnerText = function(element,text) {
+            if(typeof element.textContent == 'string'){
+                element.textContent = text;
+            }else{
+                element.innerText = text;
+            }
+        }
+        /**
+         * 某 一个值是否存在某一个数组中
+         * 如 var arr = [12,323,43,434,54,5];
+         * inArray(arr,666);  返回 false；
+         * @param array
+         * @param value
+         * @returns {boolean}
+         */
+
+        this.inArray = function (array,value) {
+            for(var i in array){
+                if(array[i] === value) return true;
+            }
+            return false;
+        };
+        /**
+         * 获取某一元素到最外层顶点的距离
+         * @param ele  元素
+         * @returns {number|Number}  顶点距离
+         */
+        this. offsetTop = function(ele) {
+            var top = ele.offsetTop;
+            var parent = ele.offsetParent;
+            while (parent != null){
+                top += parent.offsetTop;
+                parent = parent.offsetParent;
+            }
+            return top;
+        }
+        /**
+         * 得到上一个 节点的 索引
+         * 比如 ,<ul  下面有好几个  <li   ，得到当前 li 的 上一个 li
+         * @param current
+         * @param parent
+         * @returns {number}
+         */
+        this.  pervIndex = function(current,parent) {
+            var length = parent.children.length;
+            if(current == 0 ){
+                return length - 1;
+            }
+            return  parseInt(current) - 1;
+        }
+
+        /**
+         * 得到下一个 节点的 索引
+         * 比如 ,<ul  下面有好几个  <li   ，得到当前 li 的 下一个 li
+         * @param current
+         * @param parent
+         * @returns {*}
+         */
+        this. nextIndex = function(current,parent) {
+            var length = parent.children.length;
+            if(current == length){
+                return 0;
+            }
+            return  parseInt(current) + 1;
+        }
+        /**
+         * 滚动条固定到一定位置
+         */
+        this. fixedScroll = function() {
+            window.screenTop(fixedScroll().left,fixedScroll().top);
+        }
+        /**
+         * 阻止浏览器默认行为
+         * @param e
+         */
+        this. predef = function(e) {
+            e.preventDefault();
+        }
+        /**
+         * 图片预加载
+         * @param obj
+         */
+        this. preprocessorImage = function(obj) {
+            var img_array = obj.img_array;
+            var images = [];
+            for(var i = 0 , len =  img_array.length; i< len  ; i++){
+                images.push(new Image());
+                images[i].onload = function ( ){
+                    console.log('.....dd.');
+                    obj.callback(this.src);
+                };
+                console.log('......');
+                images[i].src = img_array[i];
+            }
+        }
+
+
     }
 
 
 })(this,function (args) {
 
+     var that = null
 
     function Base(args) {
+        that = this;
         // 将  elements数组在这里声明，当 new Base();就会有一份新的 数组
         // elements 用来存放 节点数组
         // 注意： elements 不能放在 prototype 原型里面，不然参数会共享，
@@ -94,8 +348,12 @@
             }
         }
 
-    }
 
+        this.xxc = function () {
+            return 11;
+        }
+
+    }
     Base.prototype = {
 
         find :function (str) {
@@ -513,261 +771,6 @@
             Base.prototype[name] = fun;
         }
     }
-
-
-
-    /**
-     * 获取节点元素的 样式 的 值
-     * @param element 节点
-     * @param attr  样式
-     * @returns {*} 样式的值
-     */
-    function getStyle(element,attr) {
-
-        if(typeof window.getComputedStyle != 'undefined'){  // W3C
-            return window.getComputedStyle(element,null)[attr];
-        }
-        else if(typeof element.currentStyle!='underfined'){  // IE
-            return element.currentStyle[attr];
-        }
-    }
-
-
-    /**
-     * 封装现代事件 ，因为 存在 IE 的兼容问题，所以在 else 的 地方处理的比较麻烦
-     * 添加事件
-     * @param obj   元素节点，需要注册事件的 节点
-     * @param type  事件类型 click 或 movie
-     * @param fun   处理事件的方法
-     * @returns {boolean}
-     */
-    function addEvent(obj,type,fun) {
-        if(typeof obj.addEventListener != "undefined"){
-            obj.addEventListener(type,fun,false);
-        }else{
-            // IE 的 现代事件绑定有很多漏洞，所以用原始的事件绑定模拟 现代事件绑定
-            //创建一个存放事件的哈希表
-            if(! obj.events)
-                obj.events = {};
-            // 第一次执行时
-            if(! obj.events[type]){
-                // 创建一个存放事件处理函数的数组
-                obj.events[type] = [];
-                // 把第一次事件处理函数添加到第一个位置
-                if(obj['on'+type])
-                    obj.events[type][0] = fun;
-            }else{
-                // 判断比较是否传进了重复的点击事件，是的话不做处理，跳过
-                if(addEvent.equal(obj.events[type],fun))
-                    return false;
-            }
-            // 从第二次开始用事件计数器来存储
-            obj.events[type][addEvent.ID ++] = fun;
-            // 执行事件处理函数
-            obj['on'+type] = addEvent.exec;
-        }
-    }
-    // 直接 var ID =  1  为什么不行，因为全局变量是魔鬼 ID是给 addEvent用的，就应该是addEvent的变量
-    addEvent.ID = 1;
-    // 执行事件处理函数
-    addEvent.exec  =function (e) {
-        var e = event || addEvent.fixEvent(window.event);
-        var es = this.events[e.type];
-        for(var i in es){
-            es[i].call(this,e);
-        }
-    }
-    addEvent.equal = function (es,fun) {
-        for(var i in es){
-            if(es[i] == fun)
-                return true;
-        }
-        return false;
-    }
-    // 把IE 常用的 Event 对象 配对到 W3C 中去 ， 其实也就是 重写 IE 的 默认方法
-    addEvent.fixEvent = function (e) {
-        //e.preventDefault() 是 w3c 的 方法
-        e.preventDefault =addEvent.fixEvent.preventDefault;
-        e.stopPropagation = addEvent.fixEvent.stopPropagation;
-        return e;
-    }
-    // IE 阻止默认行为
-    addEvent.fixEvent.preventDefault = function () {
-        // e.returnValue = false; 是 IE 的 方法
-        this.returnValue = false;
-    }
-    // IE 取消冒泡
-    addEvent.fixEvent.stopPropagation = function () {
-        this.cancelBubble = true;
-    }
-    /**
-     *  移除 事件
-     * @param obj   要移除的元素节点，需要移除事件的 节点
-     * @param type  事件类型 click 或 movie
-     * @param fun   处理事件的方法
-     */
-    function removeEvent(obj,type,fun) {
-        if(typeof obj.removeEventListener != "undefined"){
-            obj.removeEventListener(type,fun,false);
-        }else{
-            for(var i in obj.events[type]){
-                if(obj.events[type][i] == fun){
-                    delete obj.events[type][i];
-                }
-            }
-        }
-    }
-
-    /**
-     *  跨浏览器获取视口大小
-     * @returns {*}
-     */
-    function getInner(){
-        if(typeof window.innerWidth != 'undefined'){
-            // 直接 返回一个 对象  ，掉调调；
-            return {
-                width:window.innerWidth,  // google 和 IE
-                height:window.innerHeight   //  在这种 方法下 火狐 有白边，滚动条的白边
-            }
-        }else{
-            return {
-                width:document.documentElement.clientWidth,  // google  Fixfox
-                height:document.documentElement.clientHeight
-            }
-        }
-    }
-    /**
-     * 获得 浏览器滚动条的距离
-     * @returns {{top: number, left: number}}
-     */
-    function getScroll() {
-        return{
-            top:document.documentElement.scrollTop||document.body.scrollTop,
-            left:document.documentElement.scrollLeft||document.body.scrollLeft
-        }
-    }
-    /**
-     * 删除前后空格
-     * @param str
-     * @returns {string|void|XML|*}
-     */
-    function trim(str) {
-        return str.replace("/(^\s*)|(\s*$)/g,");
-    }
-
-    /**
-     * 跨浏览器 获取 html 文本
-     * @param element
-     * @returns {string}
-     */
-    function getInnerText(element) {
-        return (typeof element.textContent == 'strign')?element.textContent:element.innerText;
-    }
-    /**
-     * 跨浏览器 设置 html 文本
-     * @param element
-     * @param text
-     */
-    function setInnerText(element,text) {
-        if(typeof element.textContent == 'string'){
-            element.textContent = text;
-        }else{
-            element.innerText = text;
-        }
-    }
-    /**
-     * 某 一个值是否存在某一个数组中
-     * 如 var arr = [12,323,43,434,54,5];
-     * inArray(arr,666);  返回 false；
-     * @param array
-     * @param value
-     * @returns {boolean}
-     */
-    function inArray(array,value) {
-        for(var i in array){
-            if(array[i] === value) return true;
-        }
-        return false;
-    }
-    /**
-     * 获取某一元素到最外层顶点的距离
-     * @param ele  元素
-     * @returns {number|Number}  顶点距离
-     */
-    function offsetTop(ele) {
-        var top = ele.offsetTop;
-        var parent = ele.offsetParent;
-        while (parent != null){
-            top += parent.offsetTop;
-            parent = parent.offsetParent;
-        }
-        return top;
-    }
-
-    /**
-     * 得到上一个 节点的 索引
-     * 比如 ,<ul  下面有好几个  <li   ，得到当前 li 的 上一个 li
-     * @param current
-     * @param parent
-     * @returns {number}
-     */
-    function  pervIndex(current,parent) {
-        var length = parent.children.length;
-        if(current == 0 ){
-            return length - 1;
-        }
-        return  parseInt(current) - 1;
-    }
-    /**
-     * 得到下一个 节点的 索引
-     * 比如 ,<ul  下面有好几个  <li   ，得到当前 li 的 下一个 li
-     * @param current
-     * @param parent
-     * @returns {*}
-     */
-    function nextIndex(current,parent) {
-        var length = parent.children.length;
-        if(current == length){
-            return 0;
-        }
-        return  parseInt(current) + 1;
-    }
-
-    /**
-     * 滚动条固定到一定位置
-     */
-    function fixedScroll() {
-        window.screenTop(fixedScroll().left,fixedScroll().top);
-    }
-
-    /**
-     * 阻止浏览器默认行为
-     * @param e
-     */
-    function predef(e) {
-        e.preventDefault();
-    }
-
-    /**
-     * 图片预加载
-     * @param obj
-     */
-    function preprocessorImage(obj) {
-        var img_array = obj.img_array;
-        var images = [];
-        for(var i = 0 , len =  img_array.length; i< len  ; i++){
-            images.push(new Image());
-            images[i].onload = function ( ){
-                console.log('.....dd.');
-                obj.callback(this.src);
-            };
-            console.log('......');
-            images[i].src = img_array[i];
-        }
-    }
-
-
-
 
     return new Base(args);
 });

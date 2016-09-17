@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdc18573-f2b0-4365-9f6d-d373232ec57f" name="Default" comment="" />
+    <list default="true" id="cdc18573-f2b0-4365-9f6d-d373232ec57f" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zBase-1.1.0/index.html" afterPath="$PROJECT_DIR$/zBase-1.1.0/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zBase-1.1.0/test.js" afterPath="$PROJECT_DIR$/zBase-1.1.0/test.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zBase-1.1.0/zBase-1.1.0.js" afterPath="$PROJECT_DIR$/zBase-1.1.0/zBase-1.1.0.js" />
+    </list>
     <ignored path="zBase.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -26,29 +30,32 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/zBase-1.1.0/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="17" column="4" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
+            <state relative-caret-position="308">
+              <caret line="14" column="15" selection-start-line="14" selection-start-column="15" selection-end-line="14" selection-end-column="15" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="test.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/zBase-1.1.0/test.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+            <state relative-caret-position="396">
+              <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="zBase-1.1.0.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="zBase-1.1.0.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/zBase-1.1.0/zBase-1.1.0.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="593" column="9" selection-start-line="593" selection-start-column="9" selection-end-line="593" selection-end-column="9" />
-              <folding />
+            <state relative-caret-position="1221">
+              <caret line="251" column="47" selection-start-line="251" selection-start-column="47" selection-end-line="251" selection-end-column="47" />
+              <folding>
+                <element signature="e#8269#11301#0" expanded="false" />
+                <element signature="e#11323#25804#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -56,9 +63,20 @@
       <file leaf-file-name="zBase.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/zBase.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="595" column="44" selection-start-line="595" selection-start-column="30" selection-end-line="595" selection-end-column="44" />
-              <folding />
+            <state relative-caret-position="88">
+              <caret line="4" column="3" selection-start-line="4" selection-start-column="3" selection-end-line="4" selection-end-column="3" />
+              <folding>
+                <element signature="e#320#2589#0" expanded="false" />
+                <element signature="e#2816#3625#0" expanded="false" />
+                <element signature="e#3626#3670#0" expanded="false" />
+                <element signature="e#3742#3869#0" expanded="false" />
+                <element signature="e#3912#4087#0" expanded="false" />
+                <element signature="e#4147#4629#0" expanded="false" />
+                <element signature="e#4692#5271#0" expanded="false" />
+                <element signature="e#4766#4862#0" expanded="false" />
+                <element signature="e#4866#4986#0" expanded="false" />
+                <element signature="e#5079#5250#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -78,10 +96,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/zBase-1.1.0/zBase-1.1.0.js" />
         <option value="$PROJECT_DIR$/zBase.js" />
-        <option value="$PROJECT_DIR$/zBase-1.1.0/test.js" />
         <option value="$PROJECT_DIR$/zBase-1.1.0/index.html" />
+        <option value="$PROJECT_DIR$/zBase-1.1.0/zBase-1.1.0.js" />
+        <option value="$PROJECT_DIR$/zBase-1.1.0/test.js" />
       </list>
     </option>
   </component>
@@ -129,6 +147,30 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="zBase" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="zBase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="zBase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="zBase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="zBase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="zBase-1.1.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -208,12 +250,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1474102083193</updated>
-      <workItem from="1474102086919" duration="2113000" />
+      <workItem from="1474102086919" duration="8874000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2113000" />
+    <option name="totallyTimeSpent" value="8874000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -250,38 +292,54 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="3" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/zBase.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="595" column="44" selection-start-line="595" selection-start-column="30" selection-end-line="595" selection-end-column="44" />
-          <folding />
+        <state relative-caret-position="88">
+          <caret line="4" column="3" selection-start-line="4" selection-start-column="3" selection-end-line="4" selection-end-column="3" />
+          <folding>
+            <element signature="e#320#2589#0" expanded="false" />
+            <element signature="e#2816#3625#0" expanded="false" />
+            <element signature="e#3626#3670#0" expanded="false" />
+            <element signature="e#3742#3869#0" expanded="false" />
+            <element signature="e#3912#4087#0" expanded="false" />
+            <element signature="e#4147#4629#0" expanded="false" />
+            <element signature="e#4692#5271#0" expanded="false" />
+            <element signature="e#4766#4862#0" expanded="false" />
+            <element signature="e#4866#4986#0" expanded="false" />
+            <element signature="e#5079#5250#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/zBase-1.1.0/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="17" column="4" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zBase-1.1.0/test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+        <state relative-caret-position="308">
+          <caret line="14" column="15" selection-start-line="14" selection-start-column="15" selection-end-line="14" selection-end-column="15" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/zBase-1.1.0/zBase-1.1.0.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="593" column="9" selection-start-line="593" selection-start-column="9" selection-end-line="593" selection-end-column="9" />
+        <state relative-caret-position="1221">
+          <caret line="251" column="47" selection-start-line="251" selection-start-column="47" selection-end-line="251" selection-end-column="47" />
+          <folding>
+            <element signature="e#8269#11301#0" expanded="false" />
+            <element signature="e#11323#25804#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zBase-1.1.0/test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
           <folding />
         </state>
       </provider>
