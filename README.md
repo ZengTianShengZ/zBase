@@ -2,16 +2,17 @@
 ##轻量级DOM操作库
 
 
->version 2  -- zBase-1.1.0
->对 version 1 本做了升级
->支持 AMD & CommonJS
->可直接使用 dist 文件夹下的 zBase-1.1.0.min.js 
 
-'
->version 1 --  zBase 
->没有任何依赖
->轻量级的Dom操作库，加封装了一下比较常用的方法
+###version 2  -- zBase-1.1.0
+         对 version 1 本做了升级
+         支持 AMD & CommonJS
+         可直接使用 dist 文件夹下的
 
+ 
+###version 1 --  zBase 
+		 没有任何依赖
+		 轻量级的Dom操作库，加封装了一下比较常用的方法
+ 
 
 
 zBase是我个人写的一个轻量级的 DOM 操作库，里面封装了一些对元素节点的简单操作， 如节点的查询获取，className的添加移除，样式的添加移除， 节点的添加和移除，事件的封装，动画的封装等等...

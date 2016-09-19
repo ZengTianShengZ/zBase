@@ -9,7 +9,7 @@
         module.exports = factory();
     }else {
         /* jshint sub:true */
-        root.$ =   factory;
+        root.$ = factory;
 
         /**
          *  跨浏览器获取视口大小
@@ -51,7 +51,7 @@
          * @param fun   处理事件的方法
          * @returns {boolean}
          */
-        this. addEvent = function(obj,type,fun){
+        this.addEvent = function(obj,type,fun){
             if(typeof obj.addEventListener != "undefined"){
                 obj.addEventListener(type,fun,false);
             }else{
@@ -116,7 +116,7 @@
          * @param type  事件类型 click 或 movie
          * @param fun   处理事件的方法
          */
-        this. removeEvent = function(obj,type,fun) {
+        this.removeEvent = function(obj,type,fun) {
             if(typeof obj.removeEventListener != "undefined"){
                 obj.removeEventListener(type,fun,false);
             }else{
@@ -131,7 +131,7 @@
          * 获得 浏览器滚动条的距离
          * @returns {{top: number, left: number}}
          */
-        this. getScroll = function() {
+        this.getScroll = function() {
             return{
                 top:document.documentElement.scrollTop||document.body.scrollTop,
                 left:document.documentElement.scrollLeft||document.body.scrollLeft
@@ -142,7 +142,7 @@
          * @param str
          * @returns {string|void|XML|*}
          */
-        this. trim = function(str) {
+        this.trim = function(str) {
             return str.replace("/(^\s*)|(\s*$)/g,");
         }
 
@@ -151,7 +151,7 @@
          * @param element
          * @returns {string}
          */
-        this. getInnerText = function(element) {
+        this.getInnerText = function(element) {
             return (typeof element.textContent == 'strign')?element.textContent:element.innerText;
         }
         /**
@@ -159,7 +159,7 @@
          * @param element
          * @param text
          */
-        this. setInnerText = function(element,text) {
+        this.setInnerText = function(element,text) {
             if(typeof element.textContent == 'string'){
                 element.textContent = text;
             }else{
@@ -186,7 +186,7 @@
          * @param ele  元素
          * @returns {number|Number}  顶点距离
          */
-        this. offsetTop = function(ele) {
+        this.offsetTop = function(ele) {
             var top = ele.offsetTop;
             var parent = ele.offsetParent;
             while (parent != null){
@@ -202,7 +202,7 @@
          * @param parent
          * @returns {number}
          */
-        this.  pervIndex = function(current,parent) {
+        this.pervIndex = function(current,parent) {
             var length = parent.children.length;
             if(current == 0 ){
                 return length - 1;
@@ -217,7 +217,7 @@
          * @param parent
          * @returns {*}
          */
-        this. nextIndex = function(current,parent) {
+        this.nextIndex = function(current,parent) {
             var length = parent.children.length;
             if(current == length){
                 return 0;
@@ -234,14 +234,14 @@
          * 阻止浏览器默认行为
          * @param e
          */
-        this. predef = function(e) {
+        this.predef = function(e) {
             e.preventDefault();
         }
         /**
          * 图片预加载
          * @param obj
          */
-        this. preprocessorImage = function(obj) {
+        this.preprocessorImage = function(obj) {
             var img_array = obj.img_array;
             var images = [];
             for(var i = 0 , len =  img_array.length; i< len  ; i++){
