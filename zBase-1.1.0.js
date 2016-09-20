@@ -1,12 +1,14 @@
 
 ;(function (root ,factory) {
 
-    //support AMD requirejs
+
     if (typeof define === "function" && define.amd) {
+        //support AMD requirejs
         define(factory);
-        //CommonJS
+
     }else if (typeof exports === 'object') {
-        module.exports = factory();
+        //CommonJS
+        module.exports = factory;
     }else {
         /* jshint sub:true */
         root.$ = factory;
