@@ -60,12 +60,12 @@ zBase是我个人写的一个轻量级的 DOM 操作库，里面封装了一些�
 
 **1、.addClass()**
 
-``` 
+```Javascript 
 //给 所有 p 标签 添加 一个'name_1'  的className
 $('p').addClass('name_1')  
 
 ```
-``` 
+```Javascript 
 //添加多个  className
 $('p').addClass('name_1 name_2')  
 
@@ -73,12 +73,12 @@ $('p').addClass('name_1 name_2')
 
 **2、.removeClass()**
 
-``` 
+```Javascript 
 //给 所有 p 标签 移除 一个'name_1'  的className
 $('p').removeClass('name_1')  
 
 ```
-``` 
+```Javascript 
 //移除多个  removeClass
 $('p').removeClass('name_1 name_2')  
 
@@ -86,7 +86,7 @@ $('p').removeClass('name_1 name_2')
 
 **3、获取第几个节点  .getE()**
 `注意`，`.getE()` 返回的是 `dom元素`，所以后面不能再执行链式操作
-``` 
+```Javascript 
 //得到 ul 里面的 第 3 个 li节点
 $('ul li').getE(2)  
 
@@ -94,7 +94,7 @@ $('ul li').getE(2)
 
 **4、获取第几个节点  .getElement()**
 与第 3 条不同的是 `.getElement()` 返回的是 `当前对象`，所以后面可以再执行链式操作
-``` 
+```Javascript 
 //得到 ul 里面的 第 3 个 li节点
 $('ul li').getElement(2) .css('color','red'); 
 
@@ -102,11 +102,11 @@ $('ul li').getElement(2) .css('color','red');
 
 **5、操作样式 .css()**  
 
-```
+```Javascript
 // 给所有 p 标签 添加 color ：red ；样式
  $('p').css('color','red');
 ```
-```
+```Javascript
 // 给所有 p 标签 添加多组样式，参数是一个 obj
  $('p').css({
         "color":"red",
@@ -114,14 +114,14 @@ $('ul li').getElement(2) .css('color','red');
     });
 ```
 `说明`
-```
+```Javascript
 // 当 参数为 string 时 ，是 获取  p 标签下的 color 样式,返回一个 rgb(x, x, x)值
  $('p').css('color');
 ```
 
 **6、获取 或 设置 某一节点的属性 .arrt()** 
 
-```
+```Javascript
 // 给所有 p 标签 添加 age 属性
 $('p').arrt("age","233");
 
@@ -130,7 +130,7 @@ $('p').arrt("age");
 ```
 
 **7、获取或设置  .html()**
-```
+```Javascript
 // 给所有 p 标签 设置 html
 $('p').html("我的天，我的地，先赚一个亿！！！！");
 
@@ -145,7 +145,7 @@ $('p').html("age");
 > 
   **1、隐藏标签 .show 和 .hide**
 
-```
+```Javascript
  
 $('p').show();
 
@@ -155,7 +155,7 @@ $('p').hide();
 
 **2、鼠标的移入移出事件  .hover()；**
 
-```
+```Javascript
 // hover传递两个函数，分别 用于处理 鼠标移入事件 和 鼠标移出 事件
 
  $('span').hover(function () {
@@ -169,7 +169,7 @@ $('p').hide();
 这里做了兼容  IE6、7、8
 参数：ele：添加事件的元素节点 ， type：事件类型(click,movie等)，fun:执行事件函数
 `注意：`第一个参数为`元素节点`，可用上面提到的  `getE()`  来获得
-```
+```Javascript
  
  addEvent($('#div_id').getE(0),'click',function () {
         alert(" 啊 ，我被点击啦~~~ ");
@@ -178,7 +178,7 @@ $('p').hide();
 
 **4、移除事件  removeEvent(ele,type,fun)**
 
-```
+```Javascript
 //添加事件
  addEvent($('#div_id').getE(0),'click',f_click);
 // 移除事件
@@ -193,7 +193,7 @@ $('p').hide();
 
 其实这个方法是有上面的添加事件封装的，只不过这个方法可以多个元素同时绑定。
 
-```
+```Javascript
 // 给所有的 span 标签 绑定点击事件
 
  $('span').bind('click',function () {
@@ -208,7 +208,7 @@ $('p').hide();
 **animate(obj);**
 参数为一个 对象
 
-```
+```Javascript
 /
  * @param attr 样式 ，一般是 left 或 top
  * @param start 开始的位置
@@ -233,7 +233,7 @@ $('p').hide();
 **1、设置元素处在 视口中间位置 .centerInWindow()**
 
 `传递的两个参数分别是 元素自身的 的 宽 和 高；`
-```
+```Javascript
 // 传递的两个参数分别是 元素自身的 的 宽 和 高；
  $('#div_id').centerInWindow(100,100);
 ```
@@ -241,14 +241,14 @@ $('p').hide();
 **2、获取当前视口的大小 getInner();**
 返回 obj ，兼容 IE
 
-```
+```Javascript
   console.log("...width....."+ getInner().width);
   console.log("...height....."+ getInner().height);
 ```
 
 **3、获取 浏览器滚动条的距离 getScroll()**
 
-```
+```Javascript
  console.log("...top....."+  getScroll().top);
 console.log("...top....."+  getScroll().left);
 ```
@@ -260,7 +260,7 @@ console.log("...top....."+  getScroll().left);
 
 参数 obj ：一个对象，里面是 图片的 链接数组 和 回调函数，如下例子：
 加载完图片，再将 <img 标签插入 div 里面
-```
+```Javascript
  preprocessorImage({
                 img_array:['http://img.pconline.com.cn/images/upload/upc/tx/wallpaper/1209/10/c1/13764273_1347270360314_800x600.jpg',
                     'https://cloud.githubusercontent.com/assets/15622519/18378764/61d0b4be-76a1-11e6-9571-36d785a35e56.png'],
@@ -278,13 +278,13 @@ console.log("...top....."+  getScroll().left);
 在 zBase库中还支持扩展插件：
 比如有个 js 插件
 
-```
+```Javascript
 // 加载在 zBase.js 的后面
 <script type="text/javascript" src="../js/zBase_drag.js"></script>
 ```
 那么这个js插件需要 用 `$().extend('name',fun)` 来扩展
 `参数：`第一个参数为 插件的名称，第二个参数是 插件的实现函数
-```
+```Javascript
 $().extend("drag",function () {
 
         // 开始编程...
@@ -293,7 +293,7 @@ $().extend("drag",function () {
 
 那怎么调用写好的插件呢？ 比如我上面写了是一个 盒子拖拽的插件，那么我直接调用
 
-```
+```Javascript
  $('#div_id').drag();
 ```
 此时，id = div_id 的元素就有了拖拽的功能了(前提这个 div 必须  position: absolute;)
@@ -305,14 +305,14 @@ $().extend("drag",function () {
 >#### **七、ajax封装**
 导入 js
 
-```
+```Javascript
 <script type="text/javascript" src="../js/zBase-ajax.js"></script>
 ```
 **ajax(obj);**
 参数 obj 里面的属性说明：
  
 
-```
+```Javascript
  
   method ： 请求方式 -- get 或 post
   url ： 请求路径
@@ -323,7 +323,7 @@ $().extend("drag",function () {
  
 ```
 
-```
+```Javascript
  addEvent(document,'click',function () {
         ajax({
             method:'get',
