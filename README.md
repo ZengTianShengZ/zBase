@@ -1,55 +1,67 @@
-# zBase
-##轻量级DOM操作库
+# zBase --轻量级DOM操作库
 
 
+### zBase-1.1.0  --v2
 
-###version 2  -- zBase-1.1.0
-         对 version 1 本做了升级
-         支持 AMD & CommonJS
+- 对 version 1 版本做了升级，优化DOM查找，简化API，提高代码可读性，支持模块化
+- 支持 AMD & CommonJS
 
- 
-###version 1 --  zBase 
-		 没有任何依赖
-		 轻量级的Dom操作库，加封装了一下比较常用的方法
- 
+
+### zBase  --v1
+
+- 没有任何依赖
+- 轻量级的Dom操作库，封装一些常用的css选择器和事件操作等
+
+
+# Quick start
 
 ```
 $ npm install
-
+$ gulp scripts
 ```
 
->使用npm安装 zbase：
+>使用npm安装 zBase：
+
 ```
 $ npm install zbase
 ```
 
 
-zBase是我个人写的一个轻量级的 DOM 操作库，里面封装了一些对元素节点的简单操作， 如节点的查询获取，className的添加移除，样式的添加移除， 节点的添加和移除，事件的封装，动画的封装等等...
+zBase是一个轻量级 DOM 操作库，里面封装了一些对元素节点的简单操作， 如节点的查询获取，className的添加移除，样式的添加移除， 节点的添加和移除，事件的封装，动画的封装等等...
 
-当然只是做了简单的封装，减少 原生 js 操作dom 的麻烦，整个类库也是利用 $ 操作符，如果在使用的过程中和一些 大型的类库 如 jquery 冲突可以下载 zBase 源码，将 $ 改成任意字符即可。
 
-库的简单使用：
 
-> ####**一、节点的查找：**
+# Usage
+
+
+```
+#require
+var base = require('zbase');
+
+#es6
+import Base from 'zbase';
+```
+
+#### **一、节点的查找：**
 
 **1、一般查找：**
- 
+
 | 语法        |    概述         |   
 | ------------- |:-------------:| -----:|
-| $('div_id')      | id = 'div_id' 的元素 | 
+| $('div_id')      | id = 'div_id' 的元素 |
 | $('p')      | 所有 p 标签的元素   |   
 | $('.className') | 所有 class = 'className'  的元素     |    
-|      |   | 
-|  $(this)   |    当前 HTML 元素  | 
+|      |   |
+|  $(this)   |    当前 HTML 元素  |
 
-**2、组合查找** 
+**2、组合查找**
  在此前提下，你还可以任意组合，得到你所需要的节点，如：
 
 | 语法        |    概述         |   
 | ------------- |:-------------:| -----:|
-| $('div_id p')      | id = 'div_id' 节点下的 所有 p 元素(注意中间空格) | 
+| $('div_id p')      | id = 'div_id' 节点下的 所有 p 元素(注意中间空格) |
 | $('.name1 .name2')      | 所有class = 'name1 ' 下的所有 class = 'name1 '元素     
-| $('p a')      | 所有 p 标签下的 a 标签元素     | 
+| $('p a')      | 所有 p 标签下的 a 标签元素     |
 
 
 **3、find查找**
@@ -57,24 +69,24 @@ zBase是我个人写的一个轻量级的 DOM 操作库，里面封装了一些�
 
 | 语法        |    概述         |   
 | ------------- |:-------------:| -----:|
-| $('p').find('a')      |  所有 p 标签下的 a 标签元素 | 
+| $('p').find('a')      |  所有 p 标签下的 a 标签元素 |
 | $('.name1').find('.name2') |  所有class = 'name1 ' 下的所有 class = 'name1 '元素   
-| $('#div_1').find('div_2')      | `注意`这样也是行的，但没什么意义，最后得到的是 id= 'div_2' 的元素，与 id= 'div_2'没关系  | 
- 
+| $('#div_1').find('div_2')      | `注意`这样也是行的，但没什么意义，最后得到的是 id= 'div_2' 的元素，与 id= 'div_2'没关系  |
 
 
->#### **二 、操作节点**
->由于 $() 及几乎所有库的方法都返回当前对象，所以支持链式操作！！！
+
+#### **二 、操作节点**
 
 
 **1、.addClass()**
 
-```Javascript 
-//给 所有 p 标签 添加 一个'name_1'  的className
+```Javascript
+//给 所有 p 标签 添加 一个'name_1'  的class
+
 $('p').addClass('name_1')  
 
 ```
-```Javascript 
+```Javascript
 //添加多个  className
 $('p').addClass('name_1 name_2')  
 
@@ -82,12 +94,12 @@ $('p').addClass('name_1 name_2')
 
 **2、.removeClass()**
 
-```Javascript 
+```Javascript
 //给 所有 p 标签 移除 一个'name_1'  的className
 $('p').removeClass('name_1')  
 
 ```
-```Javascript 
+```Javascript
 //移除多个  removeClass
 $('p').removeClass('name_1 name_2')  
 
@@ -95,53 +107,56 @@ $('p').removeClass('name_1 name_2')
 
 **3、获取第几个节点  .getE()**
 `注意`，`.getE()` 返回的是 `dom元素`，所以后面不能再执行链式操作
-```Javascript 
+```Javascript
 //得到 ul 里面的 第 3 个 li节点
 $('ul li').getE(2)  
 
 ```
 
-**4、获取第几个节点  .getElement()**
+**4、getElement 获取第几个节点  **
+
 与第 3 条不同的是 `.getElement()` 返回的是 `当前对象`，所以后面可以再执行链式操作
-```Javascript 
+```Javascript
 //得到 ul 里面的 第 3 个 li节点
-$('ul li').getElement(2) .css('color','red'); 
+$('ul li').getElement(2) .css('color','red');
 
 ```
 
-**5、操作样式 .css()**  
+**5、css方法**  
 
 ```Javascript
-// 给所有 p 标签 添加 color ：red ；样式
+// 给所有 p 标签 添加 color样式
  $('p').css('color','red');
 ```
+
 ```Javascript
-// 给所有 p 标签 添加多组样式，参数是一个 obj
+// 给所有 p 标签 添加多组样式
  $('p').css({
         "color":"red",
         "background":"blue"
     });
 ```
+
 `说明`
 ```Javascript
-// 当 参数为 string 时 ，是 获取  p 标签下的 color 样式,返回一个 rgb(x, x, x)值
+// 当 参数只有一个时，获取该值
  $('p').css('color');
 ```
 
-**6、获取 或 设置 某一节点的属性 .arrt()** 
+**6、获取 或 设置 某一节点的属性 .arrt()**
 
 ```Javascript
 // 给所有 p 标签 添加 age 属性
 $('p').arrt("age","233");
 
-// 当参数只有一个时 ， 获得 p 标签下的属性
+// 当参数只有一个时 ， 获得 p 标签下的属性值
 $('p').arrt("age");
 ```
 
-**7、获取或设置  .html()**
+**7、html()获取或设置html  **
 ```Javascript
 // 给所有 p 标签 设置 html
-$('p').html("我的天，我的地，先赚一个亿！！！！");
+$('p').html("I love JavaScript！");
 
 // 得到 html 值
 $('p').html("age");
@@ -150,19 +165,19 @@ $('p').html("age");
 
 
 
->#### **三、事件操作**
-> 
-  **1、隐藏标签 .show 和 .hide**
+#### **三、事件操作**
+
+**1、隐藏标签 show 和 hide方法**
 
 ```Javascript
- 
+
 $('p').show();
 
 $('p').hide();
 
 ```
 
-**2、鼠标的移入移出事件  .hover()；**
+**2、hover()鼠标的移入移出事件；**
 
 ```Javascript
 // hover传递两个函数，分别 用于处理 鼠标移入事件 和 鼠标移出 事件
@@ -174,25 +189,25 @@ $('p').hide();
     });
 ```
 
-**3、添加事件  addEvent(ele,type,fun);**
+**3、addEvent(ele,type,fun) 添加事件 ;**
 这里做了兼容  IE6、7、8
 参数：ele：添加事件的元素节点 ， type：事件类型(click,movie等)，fun:执行事件函数
 `注意：`第一个参数为`元素节点`，可用上面提到的  `getE()`  来获得
 ```Javascript
- 
+
  addEvent($('#div_id').getE(0),'click',function () {
         alert(" 啊 ，我被点击啦~~~ ");
     });
 ```
 
-**4、移除事件  removeEvent(ele,type,fun)**
+**4、removeEvent(ele,type,fun) 移除事件**
 
 ```Javascript
 //添加事件
  addEvent($('#div_id').getE(0),'click',f_click);
 // 移除事件
  removeEvent($('#div_id').getE(0),'click',f_click);
- 
+
  function f_click() {
     alert(" 啊 ，我被点击啦~~~ ");
  }
@@ -200,7 +215,7 @@ $('p').hide();
 
 **5、绑定事件  bind();**
 
-其实这个方法是有上面的添加事件封装的，只不过这个方法可以多个元素同时绑定。
+
 
 ```Javascript
 // 给所有的 span 标签 绑定点击事件
@@ -211,11 +226,11 @@ $('p').hide();
 ```
 
 
->#### **四、动画**
-> 动画做的不多，就一个 animate() ，其实现在的css3的动画效果已经很强大和简便了，这里 做了一个动画的简单封装，有兴趣可以查看源码，看一下思路。
+#### **四、animate动画**
 
-**animate(obj);**
-参数为一个 对象
+
+>**animate(obj);**
+
 
 ```Javascript
 /
@@ -236,8 +251,6 @@ $('p').hide();
 
 
 
- 
- 
 >#### **五、一些工具方法**
 **1、设置元素处在 视口中间位置 .centerInWindow()**
 
@@ -264,8 +277,6 @@ console.log("...top....."+  getScroll().left);
 
 **4、图片预加载 preprocessorImage(obj)**
 
-一般呢，我们往  <img 标签 设置 src = ‘xxx.png’ 那么浏览器就开始请求数据加载图片了，所以当你加载一张大图时，就会看见图片从上 到下慢慢的显示出来。
-而图片 `预加载`  则是 先在后台请求数据加载完图片，然后再让图片一下显示出来，效果是不同的！
 
 参数 obj ：一个对象，里面是 图片的 链接数组 和 回调函数，如下例子：
 加载完图片，再将 <img 标签插入 div 里面
@@ -273,9 +284,9 @@ console.log("...top....."+  getScroll().left);
  preprocessorImage({
                 img_array:['http://img.pconline.com.cn/images/upload/upc/tx/wallpaper/1209/10/c1/13764273_1347270360314_800x600.jpg',
                     'https://cloud.githubusercontent.com/assets/15622519/18378764/61d0b4be-76a1-11e6-9571-36d785a35e56.png'],
-               
+
                 callback:function (img_src) {
-                   
+
                     $('#img-div').html( '<img class="bg-img" src="'+  img_src +'" alt="">');
                 }
             });
@@ -283,20 +294,20 @@ console.log("...top....."+  getScroll().left);
 
 
 
->#### **六、添加插件**
-在 zBase库中还支持扩展插件：
-比如有个 js 插件
+#### **六、添加插件**
+
+zBase库还支持扩展插件：
 
 ```Javascript
 // 加载在 zBase.js 的后面
-<script type="text/javascript" src="../js/zBase_drag.js"></script>
+<script  src="../js/zBase_drag.js"></script>
 ```
 那么这个js插件需要 用 `$().extend('name',fun)` 来扩展
 `参数：`第一个参数为 插件的名称，第二个参数是 插件的实现函数
 ```Javascript
 $().extend("drag",function () {
 
-        // 开始编程...
+        // your code here...
 }
 ```
 
@@ -311,25 +322,26 @@ $().extend("drag",function () {
 有了插件扩展是不是很方便呢，可以为 zBase 库 扩展跟多自己实用的功能。
 
 
->#### **七、ajax封装**
-导入 js
+#### **七、ajax封装**
+
+引入`zBase-ajax.js`文件：
 
 ```Javascript
-<script type="text/javascript" src="../js/zBase-ajax.js"></script>
+<script src="../js/zBase-ajax.js"></script>
 ```
 **ajax(obj);**
 参数 obj 里面的属性说明：
- 
+
 
 ```Javascript
- 
+
   method ： 请求方式 -- get 或 post
   url ： 请求路径
   async ：true 为异步请求 ， false 为同步请求
   data ： 请求数据 ，为 一个 对象
-  success ：请求成功回调函数
-  error ：请求失败回调函数
- 
+  success ：请求成功时的回调函数
+  error ：请求失败时的回调函数
+
 ```
 
 ```Javascript
@@ -352,7 +364,10 @@ $().extend("drag",function () {
         });
 ```
 
-没错，就是这么使用，是不是很方便，具体可查看源码
 
-项目有不足的地方欢迎大家 issues ，本类库适合做一些小项目时使用，主要避免了原生js操作dom的麻烦，但是远不及jquery，zepto那么强大
-的功能。
+>项目有不足的地方欢迎大家 issues ，本类库适合做一些小项目时使用，主要避免了原生js操作dom的麻烦，以及浏览器的兼容问题
+
+# LICENSE
+(MIT License)
+
+Copyright (c) 2016 ZengTianShengZ
