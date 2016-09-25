@@ -263,10 +263,8 @@
 
 })(this,function (args) {
 
-     var that = null
-
     function Base(args) {
-        that = this;
+
         // 将  elements数组在这里声明，当 new Base();就会有一份新的 数组
         // elements 用来存放 节点数组
         // 注意： elements 不能放在 prototype 原型里面，不然参数会共享，
@@ -349,6 +347,8 @@
 
     }
     Base.prototype = {
+
+        version:"1.1.0",
 
         find :function (str) {
             var childElements = [];
@@ -512,6 +512,7 @@
          */
 
         css :function (css_type, value) {
+
                 //  js 调用属性有 两种方法 ，xx.xx 或 xx[xx] ，这里传进的是一个字符串，所以用  xx[xx]
                 var tags = this.elements.length;
                 for(var t = 0;t<tags;t++){

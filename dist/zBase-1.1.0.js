@@ -263,10 +263,9 @@
 
 })(this,function (args) {
 
-     var that = null
 
     function Base(args) {
-        that = this;
+
         // 将  elements数组在这里声明，当 new Base();就会有一份新的 数组
         // elements 用来存放 节点数组
         // 注意： elements 不能放在 prototype 原型里面，不然参数会共享，
