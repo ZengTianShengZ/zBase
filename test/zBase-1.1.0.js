@@ -340,13 +340,9 @@
             if(args != undefined){
                 this.elements[0] = args;
             }
+        }else{
+            return this;
         }
-
-
-        this.xxc = function () {
-            return 11;
-        }
-
     }
     Base.prototype = {
 

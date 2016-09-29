@@ -6,6 +6,18 @@
     <title>zbase test</title>
     <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.0.1.css">
     <style>
+        .drag-test{
+            width: 100%;
+            background-color: red;
+            height: 100px;
+            position: relative;
+        }
+        #drag-div{
+            width: 100px;
+            height: 100px;
+            background-color: cornflowerblue;
+            position: fixed;
+        }
 
     </style>
 </head>
@@ -18,11 +30,16 @@
 <div id="id-test"> </div>
 <div class="class-test"></div>
 
+<div class="drag-test">
+    <div id="drag-div"></div>
+</div>
+
+
 
 <script src="https://code.jquery.com/qunit/qunit-2.0.1.js"></script>
-
 <script src="../zBase-1.1.0.js"></script>
 <script src="zBase-test.js"></script>
+
 
 </body>
 </html>

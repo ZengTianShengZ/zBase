@@ -340,10 +340,8 @@
                 this.elements[0] = args;
             }
         }
-
-
-        this.xxc = function () {
-            return 11;
+        else{
+            return this;
         }
 
     }

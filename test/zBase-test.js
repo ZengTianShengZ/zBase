@@ -88,8 +88,6 @@ QUnit.test( "class_name", function( assert ) {
     assert.ok( remove_test(), "removeClass('name') Passed!" );
 });
 
-
-
 QUnit.test( "getElement", function( assert ) {
 
     var color = 'red';
@@ -108,7 +106,6 @@ QUnit.test( "getElement", function( assert ) {
 });
 
 QUnit.test( "getE", function( assert ) {
-
 
     function getE() {
 
@@ -135,6 +132,21 @@ QUnit.test( "firstE", function( assert ) {
     }
 
     assert.ok( firstE(), "firstE()  Passed!" );
+});
+
+QUnit.test( "lastE", function( assert ) {
+
+
+    function lastE() {
+
+        if( $('.class-test').lastE() ==  $('div').getE(0)){
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    assert.ok( lastE(), "lastE()  Passed!" );
 });
 
 QUnit.test( "lastE", function( assert ) {
