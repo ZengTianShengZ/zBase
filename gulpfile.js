@@ -12,11 +12,9 @@ var rename = require('gulp-rename');
 
 
 // 合并，压缩文件，将 js文件夹下的js文件合并压缩成 all.js 放在 /dist文件夹下
-gulp.task('scripts', function() {
-    gulp.src('zBase-1.1.0.js')
-       // .pipe(concat('all.js')) // concat 合并
-        .pipe(gulp.dest('./dist'))
-        .pipe(rename('zBase-1.1.0.min.js'))
+gulp.task('build', function() {
+    gulp.src('lib/*.js')
+        .pipe(rename({suffix: '.min'}))
         .pipe(uglify())
-        .pipe(gulp.dest('./dist'));
+        .pipe(gulp.dest('./build'));
 });

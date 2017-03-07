@@ -1,13 +1,16 @@
 # zBase --轻量级DOM操作库
 
+### zBase-1.2.0  --v3
+
+- 修复部分bug
 
 ### zBase-1.1.0  --v2
 
-- 对 version 1 版本做了升级，优化DOM查找，简化API，提高代码可读性，支持模块化
+- 对 v1 版本做了升级，优化DOM查找，简化API，提高代码可读性，支持模块化
 - 支持 AMD & CommonJS
 
 
-### zBase  --v1
+### zBase-1.0.0  --v1
 
 - 没有任何依赖
 - 轻量级的Dom操作库，封装一些常用的css选择器和事件操作等
@@ -27,10 +30,6 @@ $ npm install zbase
 ```
 
 
-zBase是一个轻量级 DOM 操作库，里面封装了一些对元素节点的简单操作， 如节点的查询获取，className的添加移除，样式的添加移除， 节点的添加和移除，事件的封装，动画的封装等等...
-
-
-
 # Usage
 
 
@@ -40,6 +39,9 @@ var base = require('zbase');
 
 #es6
 import Base from 'zbase';
+
+#script
+<script type="text/javascript" src="lib/zBase-1.2.0.js"></script>
 ```
 
 #### **一、节点的查找：**
@@ -251,8 +253,9 @@ $('p').hide();
 
 
 
->#### **五、一些工具方法**
-**1、设置元素处在 视口中间位置 .centerInWindow()**
+#### **五、一些工具方法**
+
+>**1、设置元素处在 视口中间位置 .centerInWindow()**
 
 `传递的两个参数分别是 元素自身的 的 宽 和 高；`
 ```Javascript
@@ -260,28 +263,28 @@ $('p').hide();
  $('#div_id').centerInWindow(100,100);
 ```
 
-**2、获取当前视口的大小 getInner();**
+**2、获取当前视口的大小 $().getInner();**
 返回 obj ，兼容 IE
 
 ```Javascript
-  console.log("...width....."+ getInner().width);
-  console.log("...height....."+ getInner().height);
+  console.log("...width....."+  $().getInner().width);
+  console.log("...height....."+ $().getInner().height);
 ```
 
-**3、获取 浏览器滚动条的距离 getScroll()**
+**3、获取 浏览器滚动条的距离 $().getScroll()**
 
 ```Javascript
- console.log("...top....."+  getScroll().top);
-console.log("...top....."+  getScroll().left);
+ console.log("...top....."+ $().getScroll().top);
+console.log("...top....."+  $().getScroll().left);
 ```
 
-**4、图片预加载 preprocessorImage(obj)**
+**4、图片预加载 $().preprocessorImage(obj)**
 
 
 参数 obj ：一个对象，里面是 图片的 链接数组 和 回调函数，如下例子：
 加载完图片，再将 <img 标签插入 div 里面
 ```Javascript
- preprocessorImage({
+ $().preprocessorImage({
                 img_array:['http://img.pconline.com.cn/images/upload/upc/tx/wallpaper/1209/10/c1/13764273_1347270360314_800x600.jpg',
                     'https://cloud.githubusercontent.com/assets/15622519/18378764/61d0b4be-76a1-11e6-9571-36d785a35e56.png'],
 
@@ -366,6 +369,7 @@ $().extend("drag",function () {
 
 
 >项目有不足的地方欢迎大家 issues ，本类库适合做一些小项目时使用，主要避免了原生js操作dom的麻烦，以及浏览器的兼容问题
+>各位看官如果觉得还口以的话,可以 `star` 一下此项目哦!
 
 # LICENSE
 (MIT License)

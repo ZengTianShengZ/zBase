@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>zBase-1.2.0.js</title>
+</head>
+<body>
+
+<div class="test">test div</div>
+<a href="https://github.com/ZengTianShengZ/zBase/blob/master/README.md" target="_blank">跟多用法请跳转此链接</a>
+
+<script type="text/javascript" src="lib/zBase-1.2.0.js"></script>
+<script type="text/javascript">
+    window.onload= function () {
+        // 设置 css
+        $('.test').css({
+            width:'300px',
+            height:'300px',
+            color:"white",
+            'font-size':'40px',
+            background:"red"
+        });
+
+        $('.test').animate({
+            'attr':'x',
+            'start':100,
+            't':500,
+            'step':10,
+            'alter':550
+        });
+        // 一些util
+        var s = $().getScroll();
+        console.log('获取浏览器滚动条位置');
+        console.log(s.top);
+        console.log(s.left);
+
+        var i = $().getInner();
+        console.log('获取当前窗口大小');
+        console.log(i.width);
+        console.log(i.height);
+
+    }
+</script>
+</body>
+</html>
