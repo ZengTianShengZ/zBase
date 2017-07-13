@@ -9,9 +9,6 @@ require.config({
 });
 
 require(["zbase"],function($){
-
-    console.log('.....');
-
     $('.test').css({
         width:'300px',
         height:'300px',
@@ -20,3 +17,4 @@ require(["zbase"],function($){
         background:"red"
     });
 });
+
